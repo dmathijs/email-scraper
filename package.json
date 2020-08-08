@@ -1,0 +1,31 @@
+{
+  "name": "email-scraper",
+  "version": "1.0.0",
+  "description": "A scraping package that allows retrieving emails out of obfuscated html",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "mocha ./test/unit.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmathijs/email-scraper.git"
+  },
+  "keywords": [
+    "scraping",
+    "email",
+    "obfuscated",
+    "html"
+  ],
+  "author": "Diederik Mathijs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmathijs/email-scraper/issues"
+  },
+  "homepage": "https://github.com/dmathijs/email-scraper#readme",
+  "dependencies": {
+    "tlds": "^1.208.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.1.1"
+  }
+}
