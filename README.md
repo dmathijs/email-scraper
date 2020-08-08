@@ -3,7 +3,7 @@
 This library makes it possible to parse all emails out of html, even the obfuscated ones. 
 To get started:
 
-    const { scrapeEmails } = require('scrape-emails')
+    const { scrapeEmails } = require('html-email-scraper')
 
 After that call the scrapeEmails function with your html (-string)  to fetch all emails.
 

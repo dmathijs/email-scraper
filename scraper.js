@@ -24,8 +24,17 @@ extractEmails = (html) => {
         html = html.replace(new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g'), ".")
     });
 
+    const matches = []
     // return [html.match(EMAIL_REGEX)].map((item => item[0]))
-    return html.match(EMAIL_REGEX)
+    let match = EMAIL_REGEX.exec(html)
+    while(match!= null){
+        if(match.length >= 2){
+            matches.push(match[1])
+        }
+        match = EMAIL_REGEX.exec(html)
+    }
+
+    return matches
 }
 
 deobfuscateHtml = (html) => {
