@@ -10,18 +10,28 @@ EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}s]@[${domain}.]+\\.(?:
 const HIDDEN_AT_SYM = ["(at)", "[at]", "(@)", "[@]"]
 const HIDDEN_DOT_SYM = ["(dot)", "[dot]", "(.)", "[.]"]
 
+escapeSym = (sym) => {
+    return sym.replace("(", "\\(").replace(")", "\\)").replace("[", "\\[").replace("]", "\\]");
+}
+
+const AT_REGEXES = HIDDEN_AT_SYM.map((item) => {
+    return new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g')
+})
+
+const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
+    return new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g')
+})
+
 extractEmails = (html) => {
     
-    escapeSym = (sym) => {
-        return sym.replace("(", "\\(").replace(")", "\\)").replace("[", "\\[").replace("]", "\\]");
-    }
 
-    HIDDEN_AT_SYM.forEach((item) => {
-        html = html.replace(new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g'), "@")
+
+    AT_REGEXES.forEach((item) => {
+        html = html.replace(item, "@")
     });
 
-    HIDDEN_DOT_SYM.forEach((item) => {
-        html = html.replace(new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g'), ".")
+    DOT_REGEXES.forEach((item) => {
+        html = html.replace(item, ".")
     });
 
     const matches = []
