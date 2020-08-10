@@ -1,10 +1,9 @@
 const { Buffer } = require('buffer')
 const tlds_set = require('tlds')
 
-const local = "A-Za-z0-9!#$%&\\'+\\-\\/=?^_~\\."
-const domain = 'A-Za-z0-9\\-'
+const local = "A-Za-z0-9!#$%&\'*+\\-/=?^_`{|}~"
+const domain = 'A-Za-z0-9\-'
 const tlds = tlds_set.join('|')
-
 
 const HIDDEN_AT_SYM = ["(at)", "[at]", "(@)", "[@]"]
 const HIDDEN_DOT_SYM = ["(dot)", "[dot]", "(.)", "[.]"]
@@ -21,14 +20,14 @@ const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
     return new RegExp(`\\s?${escapeSym(item)}\\s?`, 'g')
 })  
 
-extractEmails = (html) => {
 
+extractEmails = (html) => {
+    
     if(html == null || html == undefined){
         return []
     }
-    
-    // Define Regex in local scope as regex is statefull and thus can not be shared
-    const EMAIL_REGEX = new RegExp(`([${local}]+@[${domain}\\.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'g')
+
+    const EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}]@[${domain}.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'g')
     
     AT_REGEXES.forEach((item) => {
         html = html.replace(item, "@")
@@ -38,16 +37,13 @@ extractEmails = (html) => {
         html = html.replace(item, ".")
     });
 
-    const matches = []
-    let match = EMAIL_REGEX.exec(html)
-    while(match!= null){
-        if(match.length >= 2){
-            matches.push(match[1])
-        }
-        match = EMAIL_REGEX.exec(html)
+    const matches = [...html.matchAll(EMAIL_REGEX)]
+
+    if(matches && matches.length > 0){
+        return matches.map((item) => {return item[1]})
     }
 
-    return matches
+    return []
 }
 
 deobfuscateHtml = (html) => {
