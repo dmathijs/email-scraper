@@ -18,7 +18,7 @@ const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
     return new RegExp(`\\s?${escapeSym(item)}\\s?`, 'g')
 })  
 
-const EMAIL_REGEX = /([A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6})/g
+const EMAIL_REGEX = /\b([A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6})\b/g
 
 extractEmails = (html) => {
     
