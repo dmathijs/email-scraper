@@ -11,4 +11,11 @@ After that call the scrapeEmails function with your html (-string)  to fetch all
     const emails = scrapeEmails(html)
     >>> ['test@gmail.com']
 
+For async functionality:
+
+    const { scrapeEmailsPromise } = require('html-email-scraper')
+    const html = `<div>Jeremy.Clarkson (at) gmail(dot)com</div>`
+    const emails = await scrapeEmailsPromise(html)
+    >>> ['Jeremy.Clarkson@gmail.com']
+
 Feel free to submit pull requests for improvements.

@@ -1,5 +1,5 @@
 const { assert } = require('console')
-const { scrapeEmails } = require('../scraper')
+const { scrapeEmaills, scrapeEmailsPromise } = require('../scraper')
 
 
 describe('Simple email parsing test', () => {
@@ -17,9 +17,9 @@ describe('Simple email parsing test', () => {
         assert(emails[2],'Rain.Wilson@dal.ca')
     })
 
-    it('should find 1 email in obfuscated html', () => {
+    it('should find 1 email in obfuscated html using async', async () => {
         // Arrange & Act
-        const emails = scrapeEmails('<a href="javascript:window.location.href=atob(\'bWFpbHRvOmVtYWlsQGV4YW1wbGUuY29t\')">E-Mail</a>')
+        const emails = await scrapeEmailsPromise('<a href="javascript:window.location.href=atob(\'bWFpbHRvOmVtYWlsQGV4YW1wbGUuY29t\')">E-Mail</a>')
         // Assert
         assert(emails.length, 1)
     })  

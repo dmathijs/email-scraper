@@ -68,5 +68,10 @@ scrapeEmails = (html) => {
     return extractEmails(deobfuscateHtml(html));
 }
 
+scrapeEmailsPromise = async (html) => {
+    return extractEmails(deobfuscateHtml(html));
+}
+
 
 module.exports.scrapeEmails = scrapeEmails;
+module.exports.scrapeEmailsPromise = scrapeEmailsPromise;
