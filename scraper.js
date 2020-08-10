@@ -5,7 +5,7 @@ const local = "A-Za-z0-9!#$%&\\'*+\\-\\/=?^_`{|}~"
 const domain = 'A-Za-z0-9\\-'
 const tlds = tlds_set.join('|')
 
-EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}s]@[${domain}.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'gm')
+EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}s]@[${domain}.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'g')
 
 const HIDDEN_AT_SYM = ["(at)", "[at]", "(@)", "[@]"]
 const HIDDEN_DOT_SYM = ["(dot)", "[dot]", "(.)", "[.]"]
@@ -15,17 +15,17 @@ escapeSym = (sym) => {
 }
 
 const AT_REGEXES = HIDDEN_AT_SYM.map((item) => {
-    return new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g')
+    return new RegExp(`(\\s)?${escapeSym(item)}(\\s)?`, 'g')
 })
 
 const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
-    return new RegExp(`(\\s)*${escapeSym(item)}(\\s)*`, 'g')
+    return new RegExp(`(\\s)?${escapeSym(item)}(\\s)?`, 'g')
 })
+
+const ATOB_REGEX = /atob\([\'"]([A-Za-z0-9+\/]+)[\'"]\)/gm;
 
 extractEmails = (html) => {
     
-
-
     AT_REGEXES.forEach((item) => {
         html = html.replace(item, "@")
     });
@@ -56,7 +56,7 @@ deobfuscateHtml = (html) => {
     // Escape the html
     let unescapedHtml = unescape(html);
     // Replace the encoded tags
-    unescapedHtml = unescapedHtml.replace(/atob\([\'"]([A-Za-z0-9+\/]+)[\'"]\)/gm, replaceAtob)
+    unescapedHtml = unescapedHtml.replace(ATOB_REGEX, replaceAtob)
 
     return unescapedHtml
 }

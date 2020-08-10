@@ -1,4 +1,3 @@
-const asser = require('assert')
 const { assert } = require('console')
 const { scrapeEmails } = require('../scraper')
 
