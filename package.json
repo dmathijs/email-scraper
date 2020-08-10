@@ -1,6 +1,6 @@
 {
   "name": "html-email-scraper",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A scraping package that allows retrieving emails out of obfuscated html",
   "main": "scraper.js",
   "scripts": {
@@ -22,9 +22,7 @@
     "url": "https://github.com/dmathijs/email-scraper/issues"
   },
   "homepage": "https://github.com/dmathijs/email-scraper#readme",
-  "dependencies": {
-    "tlds": "^1.208.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "^8.1.1"
   }
