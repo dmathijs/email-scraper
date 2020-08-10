@@ -25,6 +25,10 @@ const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
 const ATOB_REGEX = /atob\([\'"]([A-Za-z0-9+\/]+)[\'"]\)/gm;
 
 extractEmails = (html) => {
+
+    if(html == null || html == undefined){
+        return []
+    }
     
     AT_REGEXES.forEach((item) => {
         html = html.replace(item, "@")
@@ -47,6 +51,10 @@ extractEmails = (html) => {
 }
 
 deobfuscateHtml = (html) => {
+    
+    if(html == null || html == undefined){
+        return undefined
+    }
 
     replaceAtob = (match, p1, p2, p3, offset, string) => {
         return Buffer.from(p1, 'base64').toString('binary')

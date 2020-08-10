@@ -12,9 +12,9 @@ describe('Simple email parsing test', () => {
         const emails = scrapeEmails(htmlSnippet)
         // Assert
         assert(emails.length, 3)
-        assert(emails[0],'steve.carrell@email.harvard.edu')
-        assert(emails[1],'John.Krasinksi@gmail.com')
-        assert(emails[2],'Rain.Wilson@dal.ca')
+        assert(emails[0] === 'steve.carrell@email.harvard.edu')
+        assert(emails[1] === 'John.Krasinksi@gmail.com')
+        assert(emails[2] === 'Rain.Wilson@dal.ca')
     })
 
     it('should find 1 email in obfuscated html using async', async () => {
@@ -22,5 +22,12 @@ describe('Simple email parsing test', () => {
         const emails = await scrapeEmailsPromise('<a href="javascript:window.location.href=atob(\'bWFpbHRvOmVtYWlsQGV4YW1wbGUuY29t\')">E-Mail</a>')
         // Assert
         assert(emails.length, 1)
-    })  
+    })
+
+    it('undefined body should return empty array', () => {
+        const emails = scrapeEmails(undefined)
+
+        assert(typeof emails == 'object')
+        assert(emails.length === 0)
+    })
 })
