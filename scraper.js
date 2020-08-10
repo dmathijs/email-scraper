@@ -33,7 +33,6 @@ extractEmails = (html) => {
     DOT_REGEXES.forEach((item) => {
         html = html.replace(item, ".")
     });
-
     const matches = []
     // return [html.match(EMAIL_REGEX)].map((item => item[0]))
     let match = EMAIL_REGEX.exec(html)
@@ -53,8 +52,12 @@ deobfuscateHtml = (html) => {
         return Buffer.from(p1, 'base64').toString('binary')
     }
 
+    // Undertake steps to clean html
+    // 1. Remove images
+    let cleanedHtml = html.replace(/<img[^>]*>/g,"");
+
     // Escape the html
-    let unescapedHtml = unescape(html);
+    let unescapedHtml = unescape(cleanedHtml);
     // Replace the encoded tags
     unescapedHtml = unescapedHtml.replace(ATOB_REGEX, replaceAtob)
 
