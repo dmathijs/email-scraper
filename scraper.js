@@ -5,7 +5,6 @@ const local = "A-Za-z0-9!#$%&\\'*+\\-\\/=?^_`{|}~"
 const domain = 'A-Za-z0-9\\-'
 const tlds = tlds_set.join('|')
 
-EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}s]@[${domain}.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'g')
 
 const HIDDEN_AT_SYM = ["(at)", "[at]", "(@)", "[@]"]
 const HIDDEN_DOT_SYM = ["(dot)", "[dot]", "(.)", "[.]"]
@@ -20,15 +19,17 @@ const AT_REGEXES = HIDDEN_AT_SYM.map((item) => {
 
 const DOT_REGEXES = HIDDEN_DOT_SYM.map((item) => {
     return new RegExp(`(\\s)?${escapeSym(item)}(\\s)?`, 'g')
-})
-
-const ATOB_REGEX = /atob\([\'"]([A-Za-z0-9+\/]+)[\'"]\)/gm;
+})  
 
 extractEmails = (html) => {
+  
 
     if(html == null || html == undefined){
         return []
     }
+    
+    // Define Regex in local scope as regex is statefull and thus can not be shared
+    const EMAIL_REGEX = new RegExp(`([${local}][${local}.]+[${local}s]@[${domain}.]+\\.(?:${tlds}))(?:[^${domain}]|$)`,'g')
     
     AT_REGEXES.forEach((item) => {
         html = html.replace(item, "@")
@@ -37,6 +38,7 @@ extractEmails = (html) => {
     DOT_REGEXES.forEach((item) => {
         html = html.replace(item, ".")
     });
+
     const matches = []
     // return [html.match(EMAIL_REGEX)].map((item => item[0]))
     let match = EMAIL_REGEX.exec(html)
@@ -55,6 +57,8 @@ deobfuscateHtml = (html) => {
     if(html == null || html == undefined){
         return undefined
     }
+
+    const ATOB_REGEX = /atob\([\'"]([A-Za-z0-9+\/]+)[\'"]\)/gm;
 
     replaceAtob = (match, p1, p2, p3, offset, string) => {
         return Buffer.from(p1, 'base64').toString('binary')
