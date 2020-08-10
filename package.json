@@ -1,6 +1,6 @@
 {
   "name": "html-email-scraper",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A scraping package that allows retrieving emails out of obfuscated html",
   "main": "scraper.js",
   "scripts": {
